@@ -1,15 +1,20 @@
+// 使用 stream 读取数据
 const fs = require('fs');
 const http = require('http');
 
 const server= http.createServer();
 server.on('request', (request, response) => {
+  let n = 1
   const stream = fs.createReadStream('./big_file.txt');
-  stream.pipe(response);
-  stream.pause(); // 将 Readable Stream 改为 paused 态
-  setTimeout(() => {
-    stream.resume() 
-  }, 3000); // 3s 后将 Readable Stream 改为 flowing 态
+  stream.on('data', (chunk) => {
+    console.log(`这是第${n++}次读取数据, 数据的内容是: `);
+    console.log(chunk.toString())
+  })
+  stream.on('end', () => {
+    console.log(`数据全部读完了!!`);
+  })
+  stream.pipe(response) // 使用 pipe 链接 stream 和 response 
 })
 
-server.listen(8888);  
+server.listen(8888);
 console.log('正在监听 8888 端口!')

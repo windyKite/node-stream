@@ -1,5 +1,7 @@
 const fs = require('fs');
 const { Stream } = require('stream');
+const stream = require('stream');
+console.log(Stream === stream);
 const EventEmitter = require('events');
 
 const s = fs.createReadStream('./big_file.txt')
@@ -14,4 +16,4 @@ console.log(Stream.Readable.prototype.__proto__ === Stream.prototype); // true
 // Stream.prototype 由 EventEmitter 构造
 console.log(Stream.prototype.__proto__ === EventEmitter.prototype); // true
 // EventEmitter.prototype 由 Object 构造
-console.log(EventEmitter.prototype.__proto__ === Object.prototype); // trues
+console.log(EventEmitter.prototype.__proto__ === Object.prototype); // true
